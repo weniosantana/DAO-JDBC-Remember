@@ -8,6 +8,7 @@ import org.dao.jdbc.model.entities.Department;
 import org.dao.jdbc.model.entities.Seller;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 public class App 
@@ -36,6 +37,9 @@ public class App
             System.out.println(obj);
         }
         System.out.println();
+
+        Seller insert = new Seller(null, "Wenio", "Wenio.souza123@gmail.com", new Date(), 4000.0, department);
+        sld.insert(insert);
 
     }
 }

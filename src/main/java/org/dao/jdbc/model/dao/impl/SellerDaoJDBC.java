@@ -25,7 +25,32 @@ public class SellerDaoJDBC implements SellerDao {
     }
     @Override
     public void insert(Seller obj) {
-
+        PreparedStatement st = null;
+        try{
+            conn.setAutoCommit(false);
+            st = conn.prepareStatement("INSERT INTO seller" +
+                    " (Name, Email, BirthDate, BaseSalary, DepartmentId)" +
+                    " VALUES" +
+                    " (?, ?, ?, ?, ?)");
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+            st.setDouble(4,obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+            st.executeUpdate();
+            conn.commit();
+        }catch (SQLException e){
+            try {
+                conn.rollback();
+            }catch(SQLException f){
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            throw new DbException("Erro ao executar o findById");
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
