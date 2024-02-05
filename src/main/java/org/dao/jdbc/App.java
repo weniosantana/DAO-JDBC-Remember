@@ -4,14 +4,12 @@ import org.dao.jdbc.db.DB;
 import org.dao.jdbc.model.dao.DaoFactory;
 import org.dao.jdbc.model.dao.SellerDao;
 import org.dao.jdbc.model.dao.impl.SellerDaoJDBC;
+import org.dao.jdbc.model.entities.Department;
 import org.dao.jdbc.model.entities.Seller;
 
 import java.sql.Connection;
+import java.util.List;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -21,8 +19,13 @@ public class App
 
         System.out.println("Seller FindById: ");
         Seller sl = sld.findById(3);
+        System.out.println("Seller FindByDepartment: ");
+        Department department = new Department(2, null);
+        List<Seller> list = sld.findByDepartment(department);
+        for(Seller obj : list){
+            System.out.println(obj);
 
-        System.out.println(sl);
+        }
 
 
     }
