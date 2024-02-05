@@ -46,7 +46,7 @@ public class SellerDaoJDBC implements SellerDao {
                 f.printStackTrace();
             }
             e.printStackTrace();
-            throw new DbException("Erro ao executar o findById");
+            throw new DbException("Erro ao executar o Insert");
         }
         finally {
             DB.closeStatement(st);
@@ -55,7 +55,39 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void update(Seller obj) {
+        PreparedStatement st = null;
 
+
+        try{
+            conn.setAutoCommit(false);
+
+            st = conn.prepareStatement("UPDATE seller" +
+                    " SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ?" +
+                    " WHERE Id = ?");
+
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+            st.setDouble(4,obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+            st.setInt(6, obj.getId());
+            st.executeUpdate();
+
+            conn.commit();
+        }catch (SQLException e){
+            try {
+                conn.rollback();
+            }catch(SQLException f){
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            throw new DbException("Erro ao executar o Update");
+        }
+        finally {
+            DB.closeStatement(st);
+
+
+        }
     }
 
     @Override
