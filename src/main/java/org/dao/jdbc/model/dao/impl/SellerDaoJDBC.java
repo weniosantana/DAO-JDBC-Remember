@@ -101,7 +101,46 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public List<Seller> findAll() {
-        return null;
+
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+        try{
+            st = conn.prepareStatement("SELECT seller.*,department.Name as DepName" +
+                    " FROM seller INNER JOIN department" +
+                    " ON seller.DepartmentId = department.Id" +
+                    " ORDER BY Name");
+
+            rs = st.executeQuery();
+
+
+            List<Seller> list = new ArrayList<>();
+            while(rs.next()){
+
+
+                Department dep;
+                dep = instantiateDepartment(rs);
+
+
+                Seller obj = instantiateSeller(rs, dep);
+
+                list.add(obj);
+            }
+            return list;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new DbException("Erro ao executar o FindByAll");
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+
+        }
+
+
     }
 
     @Override
@@ -143,7 +182,7 @@ public class SellerDaoJDBC implements SellerDao {
 
         }catch (SQLException e){
             e.printStackTrace();
-            throw new DbException("Erro ao executar o findById");
+            throw new DbException("Erro ao executar o FindByDepartment");
         }
         finally {
             DB.closeStatement(st);

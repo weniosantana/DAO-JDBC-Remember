@@ -19,14 +19,23 @@ public class App
 
         System.out.println("Seller FindById: ");
         Seller sl = sld.findById(3);
+        System.out.println(sl);
+        System.out.println();
         System.out.println("Seller FindByDepartment: ");
         Department department = new Department(2, null);
         List<Seller> list = sld.findByDepartment(department);
+
         for(Seller obj : list){
             System.out.println(obj);
-
         }
+        System.out.println();
+        List<Seller> ls = sld.findAll();
+        System.out.println("Seller FindByAll: ");
 
+        for(Seller obj : ls){
+            System.out.println(obj);
+        }
+        System.out.println();
 
     }
 }
