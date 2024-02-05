@@ -85,14 +85,34 @@ public class SellerDaoJDBC implements SellerDao {
         }
         finally {
             DB.closeStatement(st);
-
-
         }
     }
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null;
 
+
+        try{
+            conn.setAutoCommit(false);
+
+            st = conn.prepareStatement("DELETE FROM seller WHERE Id = ?");
+            st.setInt(1, id);
+            st.executeUpdate();
+
+            conn.commit();
+        }catch (SQLException e){
+            try {
+                conn.rollback();
+            }catch(SQLException f){
+                f.printStackTrace();
+            }
+            e.printStackTrace();
+            throw new DbException("Erro ao executar o Update");
+        }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

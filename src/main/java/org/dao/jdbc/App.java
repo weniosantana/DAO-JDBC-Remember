@@ -38,10 +38,13 @@ public class App
         }
         System.out.println();
 
-        Seller insert = new Seller(null, "Wenio", "Wenio.souza123@gmail.com", new Date(), 4000.0, department);
-        sld.insert(insert);
+        //Seller insert = new Seller(null, "Wenio", "Wenio.souza123@gmail.com", new Date(), 4000.0, department);
+        //sld.insert(insert);
 
         Seller update = new Seller(7, "Greg", "Greg@gmail.com", new Date(), 3000.0, department);
         sld.update(update);
+
+        sld.deleteById(9);
+
     }
 }
