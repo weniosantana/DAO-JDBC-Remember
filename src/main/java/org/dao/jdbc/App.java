@@ -18,6 +18,8 @@ public class App
     {
         SellerDao sld = DaoFactory.createSellerDao();
 
+
+        System.out.println("Seller FindById: ");
         Seller sl = sld.findById(3);
 
         System.out.println(sl);
