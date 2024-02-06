@@ -64,12 +64,12 @@ public class App
         Department DepUpdate = new Department(6, "Prodesp");
         deparmentDao.update(8, DepUpdate);
         System.out.println("Atualizado um Department");
-        System.out.println();
+       
         //Delete em Department
         System.out.println("Deletando department");
         deparmentDao.deleteById(5);
         System.out.println("Department deletado");
-        System.out.println();
+
         System.out.println("Resultado findById: ");
         deparmentDao.findById(3);
         List<Department> lis = deparmentDao.findAll();
@@ -78,6 +78,7 @@ public class App
             System.out.println(obje);
         }
         System.out.println();
+
     }
 
 }
